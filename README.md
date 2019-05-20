@@ -9,17 +9,38 @@ To get started, clone the repository and run `pip install --editable .`
 Then, run `allentune -h`.
 
 
-Example command for random search:
+## Setup base training config
+
+See `examples/classifier.jsonnet` as an example of a CNN-based classifier on the IMDB dataset.
+
+## Setup the Search space
+
+See `examples/search_space.jsonnet` as an example of search bounds applied to each hyperparameter of the CNN classifier.
+
+## Run Hyperparameter Search
+
+Example command for 10 samples of random search with the classifier, on 4 GPUs:
 
 ```
-$ allentune 
-    --experiment-name my_random_search \
+$ allentune search \
+    --experiment-name classifier_search \
     --num-cpus 56 \
     --num-gpus 4 \
     --cpus-per-trial 1 \
     --gpus-per-trial 1 \
-    --search-space ./examples/search_space.json \
-    --num-samples 2 \
-    --base-config ./examples/model.jsonnet \
-    --include-package mylib
+    --search_space ./examples/search_space.jsonnet \
+    --num-samples 10 \
+    --base-config ./examples/classifier.jsonnet
 ```
+
+## Generate a report from the search
+
+Generate a dataset of resulting hyperparameter assignments and training metrics, for further analysis:
+
+```
+$ allentune report \
+    --logdir ./logs/classifier_search/ \
+    --performance_metric best_validation_accuracy
+```
+
+This will create a file `results.jsonl` in `logs/classifier_search`. Each line has the hyperparameter assignments and resulting training metrics from each experiment of your search.

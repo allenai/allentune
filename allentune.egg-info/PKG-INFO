@@ -6,19 +6,30 @@ Home-page: https://github.com/kernelmachine/allentune
 Author: Suchin Gururangan
 Author-email: suching@allenai.org
 License: Apache
-Description: ## Hyperparameter Search in AllenNLP
+Description: # Allentune
+        
+        *Hyperparameter Search for AllenNLP, powered by RayTune.*
+        
+        Run distributed, parallel hyperparameter search on GPUs or CPUs. Compatibility with all Raytune search algorithms (e.g. Grid, Random, etc.) and search schedulers (e.g. Hyperband, Median Stopping Rule, Population Based Training)
+        
+        To get started, clone the repository and run `pip install --editable .`
+        
+        Then, run `allentune -h`.
         
         
-        This repository is a fork of https://github.com/ChristophAlt/tuna.
-        
-        The main differences are:
-            * environment variables and random search
-        
-        
-        ## Example run
+        Example command for random search:
         
         ```
-        CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7" tuna run --experiment_name classifier_search --num-gpus 8 --num-cpus 56 --cpus-per-trial 1 --gpus-per-trial 1 --parameter-file ./training_config/classifier.jsonnet --search-space CLASSIFIER_SEARCH --num-trials 200
+        $ allentune 
+            --experiment-name my_random_search \
+            --num-cpus 56 \
+            --num-gpus 4 \
+            --cpus-per-trial 1 \
+            --gpus-per-trial 1 \
+            --search-space ./examples/search_space.json \
+            --num-samples 2 \
+            --base-config ./examples/model.jsonnet \
+            --include-package mylib
         ```
 Keywords: NLP deep learning hyperparameter tuning
 Platform: UNKNOWN
