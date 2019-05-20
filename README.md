@@ -44,3 +44,17 @@ $ allentune report \
 ```
 
 This will create a file `results.jsonl` in `logs/classifier_search`. Each line has the hyperparameter assignments and resulting training metrics from each experiment of your search.
+
+
+## Plot expected performance
+
+Plot expected performance as a function of hyperparameter assignments or training duration.
+
+```
+allentune plot \
+    --data_name IMDB \
+    --subplot 1 1 \
+    --figsize 10 10 \
+    --result-file ./logs/classifier_search/results.jsonl \
+    --output-file ./classifier_performance.pdf
+```

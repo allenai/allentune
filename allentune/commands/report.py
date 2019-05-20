@@ -26,7 +26,7 @@ class Report(Subcommand):
             type=str
         )
         subparser.add_argument(
-            '--embedding',
+            '--model',
             required=False,
             type=str
         )
@@ -55,8 +55,8 @@ def generate_report(args: argparse.Namespace):
     df['training_duration'] = pd.to_timedelta(df['training_duration']).dt.total_seconds()
     if args.throttle:
         df['dataset_reader.sample'] = args.throttle
-    if args.embedding:
-        df['embedding'] = args.embedding
+    if args.model:
+        df['model'] = args.model
     output_file = os.path.join(experiment_dir, "results.jsonl")
     df.to_json(output_file, lines=True, orient='records')
     print("results written to {}".format(output_file))
