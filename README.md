@@ -2,13 +2,7 @@
 
 *Hyperparameter Search for AllenNLP, powered by RayTune.*
 
-This projects allows you to run distributed, parallel hyperparameter search with AllenNLP on GPUs or CPUs. 
-
-Supports all Raytune search algorithms (e.g. Grid, Random, etc.) and search schedulers (e.g. Hyperband, Median Stopping Rule, Population Based Training).
-
-Additionally, plot expected performance of models as a function of computational budget (e.g. number of hyperparameter assignments or training duration).
-
-
+Run distributed, parallel hyperparameter search on GPUs or CPUs. Compatibility with all Raytune search algorithms (e.g. Grid, Random, etc.) and search schedulers (e.g. Hyperband, Median Stopping Rule, Population Based Training)
 
 To get started, clone the repository and run `pip install --editable .`
 
@@ -65,4 +59,4 @@ allentune plot \
     --output-file ./classifier_performance.pdf
 ```
 
-![classifier performance](figs/classifier_performance.pdf)
+![Classifier performance](figs/classifier_performance.png)
