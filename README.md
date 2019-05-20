@@ -59,4 +59,5 @@ allentune plot \
     --output-file ./classifier_performance.pdf
 ```
 
-![Classifier performance](figs/classifier_performance.png)
+<div style="text-align:center"> <img src="figs/classifier_performance.png" width="500"></div>
+
