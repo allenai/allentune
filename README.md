@@ -65,4 +65,4 @@ allentune plot \
     --output-file ./classifier_performance.pdf
 ```
 
-![classifier performance](http://github.com/allenai/allentune/figs/classifier_performance.pdf)
+![classifier performance](figs/classifier_performance.pdf)
