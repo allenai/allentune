@@ -1,0 +1,8 @@
+# External dependencies
+ray==0.6.2
+allennlp
+pandas
+
+# Testing
+pytest
+pytest-cov

@@ -1,0 +1,30 @@
+Metadata-Version: 2.1
+Name: allentune
+Version: 0.0.1a0
+Summary: Hyperparameter tuning for AllenNLP, powered by Ray
+Home-page: https://github.com/kernelmachine/allentune
+Author: Suchin Gururangan
+Author-email: suching@allenai.org
+License: Apache
+Description: ## Hyperparameter Search in AllenNLP
+        
+        
+        This repository is a fork of https://github.com/ChristophAlt/tuna.
+        
+        The main differences are:
+            * environment variables and random search
+        
+        
+        ## Example run
+        
+        ```
+        CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7" tuna run --experiment_name classifier_search --num-gpus 8 --num-cpus 56 --cpus-per-trial 1 --gpus-per-trial 1 --parameter-file ./training_config/classifier.jsonnet --search-space CLASSIFIER_SEARCH --num-trials 200
+        ```
+Keywords: NLP deep learning hyperparameter tuning
+Platform: UNKNOWN
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Scientific/Engineering :: Artificial Intelligence
+Requires-Python: >=3.6.0
+Description-Content-Type: text/markdown

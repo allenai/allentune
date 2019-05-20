@@ -1,0 +1,3 @@
+[console_scripts]
+allentune = allentune.__main__:main
+
