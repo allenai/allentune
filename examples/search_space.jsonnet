@@ -33,5 +33,4 @@
     "SEQUENCE_LENGTH": 400,
     "BATCH_SIZE": 32,
     "NUM_EPOCHS": 50,
-    "VALIDATION_METRIC": "+npmi"
 }
