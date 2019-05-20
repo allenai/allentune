@@ -58,3 +58,5 @@ allentune plot \
     --result-file ./logs/classifier_search/results.jsonl \
     --output-file ./classifier_performance.pdf
 ```
+
+![classifier performance](http://github.com/allenai/allentune/figs/classifier_performance.pdf)
