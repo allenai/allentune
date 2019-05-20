@@ -29,7 +29,7 @@ $ allentune search \
     --cpus-per-trial 1 \
     --gpus-per-trial 1 \
     --search_space ./examples/search_space.jsonnet \
-    --num-samples 10 \
+    --num-samples 50 \
     --base-config ./examples/classifier.jsonnet
 ```
 

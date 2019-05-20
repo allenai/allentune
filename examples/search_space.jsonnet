@@ -32,5 +32,5 @@
     },
     "SEQUENCE_LENGTH": 400,
     "BATCH_SIZE": 32,
-    "NUM_EPOCHS": 50,
+    "NUM_EPOCHS": 50
 }
