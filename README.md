@@ -51,7 +51,7 @@ This will create a file `results.jsonl` in `logs/classifier_search`. Each line h
 Plot expected performance as a function of hyperparameter assignments or training duration.
 
 ```
-allentune plot \
+$ allentune plot \
     --data_name IMDB \
     --subplot 1 1 \
     --figsize 10 10 \
