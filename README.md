@@ -1,6 +1,6 @@
 # Allentune
 
-Hyperparameter Search for AllenNLP, powered by RayTune.
+*Hyperparameter Search for AllenNLP, powered by RayTune.*
 
 Run distributed, parallel hyperparameter search on GPUs or CPUs. Compatibility with all Raytune search algorithms (e.g. Grid, Random, etc.) and search schedulers (e.g. Hyperband, Median Stopping Rule, Population Based Training)
 
