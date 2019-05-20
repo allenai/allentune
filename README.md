@@ -18,7 +18,7 @@ $ allentune
     --num-gpus 4 \
     --cpus-per-trial 1 \
     --gpus-per-trial 1 \
-    -e ./examples/search_space.json \
+    --search-space ./examples/search_space.json \
     --num-samples 2 \
     --base-config ./examples/model.jsonnet \
     --include-package mylib
