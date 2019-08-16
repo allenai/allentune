@@ -9,20 +9,18 @@ import numpy as np
 import ray
 from ray.tune import function, register_trainable, run_experiments, sample_from
 from ray.tune.function_runner import StatusReporter
-from ray.tune.schedulers import MedianStoppingRule
 
-from allentune.executors import Executor
-from allentune.runners import Runner
+from allentune.modules.allennlp_runner import AllenNlpRunner
 from allentune.util.random_search import RandomSearch
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
 
-class RayExecutor(Executor):
+class RayExecutor(object):
     name = "Ray"
 
-    def __init__(self, runner: Runner) -> None:
-        super(RayExecutor, self).__init__(runner)
+    def __init__(self, runner: AllenNlpRunner) -> None:
+        self._runner = runner
 
     def parse_search_config(self, search_config: Dict) -> Dict:
         for hyperparameter, val in search_config.items():
@@ -93,3 +91,8 @@ class RayExecutor(Executor):
             logger.error(
                 f"Error during run of experiment '{args.experiment_name}': {e}"
             )
+
+    def run(self, args: argparse.Namespace) -> None:
+        setattr(args, "cwd", os.getcwd())
+        run_func = self._runner.get_run_func(args)
+        self.run_distributed(run_func, args)

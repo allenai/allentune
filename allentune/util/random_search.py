@@ -8,6 +8,14 @@ class RandomSearch:
 
     @staticmethod
     def random_choice(*args):
+        """
+        pick a random element from a set.
+        
+        Example:
+            >> sampler = RandomSearch.random_choice(1,2,3)
+            >> sampler()
+                2
+        """
         choices = []
         for arg in args:
             choices.append(arg)
@@ -19,7 +27,7 @@ class RandomSearch:
 
     @staticmethod
     def random_loguniform(low, high):
-        return lambda: str(np.exp(np.random.uniform(np.log(low), np.log(high))))
+        return lambda: np.exp(np.random.uniform(np.log(low), np.log(high)))
 
     @staticmethod
     def random_subset(*args):
@@ -56,7 +64,7 @@ class HyperparameterSearch:
             if isinstance(val, (int, np.int)):
                 return int(val)
             elif isinstance(val, (float, np.float)):
-                return float(val)
+                return str(val)
             elif isinstance(val, (np.ndarray, list)):
                 return " ".join(val)
             else:
@@ -64,7 +72,7 @@ class HyperparameterSearch:
         elif isinstance(val, (int, np.int)):
             return int(val)
         elif isinstance(val, (float, np.float)):
-            return float(val)
+            return str(val)
         elif isinstance(val, (np.ndarray, list)):
             return " ".join(val)
         elif val is None:
