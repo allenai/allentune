@@ -4,8 +4,8 @@ import logging
 import os
 import argparse
 
-from allentune.runners import AllenNlpRunner
-from allentune.executors import RayExecutor
+from allentune.modules import AllenNlpRunner
+from allentune.modules import RayExecutor
 from allentune.commands.subcommand import Subcommand
 
 if os.environ.get("ALLENTUNE_DEBUG"):

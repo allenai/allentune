@@ -2,12 +2,17 @@
 
 *Hyperparameter Search for AllenNLP, powered by RayTune.*
 
-Run distributed, parallel hyperparameter search on GPUs or CPUs. Compatibility with all Raytune search algorithms (e.g. Grid, Random, etc.) and search schedulers (e.g. Hyperband, Median Stopping Rule, Population Based Training)
+Run distributed, parallel hyperparameter search on GPUs or CPUs. See the associated paper [here](http://arxiv.org).
+
+This library was inspired by https://github.com/ChristophAlt/tuna, thanks to that author for their work!
 
 To get started, clone the repository and run `pip install --editable .`
 
 Then, run `allentune -h`.
 
+## What does Allentune support?
+
+This library is compatible with random and grid search algorithms via Raytune. Support for complex search schedulers (e.g. Hyperband, Median Stopping Rule, Population Based Training) is on the roadmap.
 
 ## Setup base training config
 
@@ -33,6 +38,12 @@ $ allentune search \
     --base-config ./examples/classifier.jsonnet
 ```
 
+To restrict the GPUs you run on, run the above command with `CUDA_VISIBLE_DEVICES=xxx`.
+
+When using allentune with your own allennlp modules, run it with the `--include-package xxx` flag, just like you would when running the `allennlp` command.
+
+The `search` command will output all results of experiments in the specified `--logdir`, default output directory is `$(pwd)/logs/`.
+
 ## Generate a report from the search
 
 Generate a dataset of resulting hyperparameter assignments and training metrics, for further analysis:
@@ -48,7 +59,7 @@ This will create a file `results.jsonl` in `logs/classifier_search`. Each line h
 
 ## Plot expected performance
 
-Plot expected performance as a function of hyperparameter assignments or training duration.
+Plot expected performance as a function of hyperparameter assignments or training duration. For more information on how this plot is generated, check the associated paper [here](http://arxiv.org).
 
 ```
 $ allentune plot \
@@ -61,3 +72,4 @@ $ allentune plot \
 
 <div style="text-align:center"> <img src="figs/classifier_performance.png" width="500"></div>
 
+Sample more hyperparameters until this curve converges to some expected validation performance!

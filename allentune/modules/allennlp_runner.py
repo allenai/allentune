@@ -13,15 +13,11 @@ from allennlp.common.params import Params, parse_overrides, with_fallback
 from allennlp.common.util import import_submodules
 
 import _jsonnet
-from allentune.runners import Runner
 from allentune.util.random_search import HyperparameterSearch
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
-def is_s3_url(path):
-    return path[:1] == 's3'
-
-class AllenNlpRunner(Runner):
+class AllenNlpRunner(object):
     name = "AllenNLP"
 
     def get_run_func(
@@ -44,7 +40,6 @@ class AllenNlpRunner(Runner):
             sample = search_space.sample()
             for k, v in sample.items():
                 config[k] = str(v)
-                os.environ[k] = str(v)
             
             params_dict = json.loads(
                 _jsonnet.evaluate_snippet(
