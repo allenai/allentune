@@ -9,7 +9,7 @@ class TestRandomSearch(object):
     def test_random_choice(self):
         random_search = RandomSearch()
         items = range(100)
-        sampler = random_search.random_choice(*items)
+        sampler = random_search.random_choice(items)
         for _ in range(3):
             res = sampler()
             assert res in items
@@ -29,22 +29,6 @@ class TestRandomSearch(object):
         for _ in range(3):
             res = sampler()
             assert res >= 1e-5 and res <= 1e-1
-
-    def test_random_subset(self):
-        random_search = RandomSearch()
-        items = list(string.ascii_lowercase)
-        sampler = random_search.random_subset(*items)
-        for _ in range(3):
-            res = sampler()
-            assert len(res) <= len(items) and all([item in items for item in res])
-
-    def test_random_pair(self):
-        random_search = RandomSearch()
-        items = list(string.ascii_lowercase)
-        sampler = random_search.random_pair(*items)
-        for _ in range(3):
-            res = sampler()
-            assert len(res) == 2 and all([item in items for item in res])
 
     def test_random_uniform(self):
         random_search = RandomSearch()

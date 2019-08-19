@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict
+from typing import Any, Dict, List, Union
 
 import numpy as np
 import ray
@@ -7,7 +7,7 @@ import ray
 class RandomSearch:
 
     @staticmethod
-    def random_choice(*args):
+    def random_choice(args: List[Any], n: int = 1):
         """
         pick a random element from a set.
         
@@ -19,34 +19,42 @@ class RandomSearch:
         choices = []
         for arg in args:
             choices.append(arg)
-        return lambda: np.random.choice(choices)
+        return lambda: np.random.choice(choices, n, replace=False)
 
     @staticmethod
-    def random_integer(low, high):
+    def random_integer(low: Union[int, float], high: Union[int, float]):
+        """
+        pick a random integer between two bounds
+        
+        Example:
+            >> sampler = RandomSearch.random_integer(1, 10)
+            >> sampler()
+                9
+        """
         return lambda: int(np.random.randint(low, high))
 
     @staticmethod
-    def random_loguniform(low, high):
+    def random_loguniform(low: Union[float, int], high: Union[float, int]):
+        """
+        pick a random float between two bounds, using loguniform distribution
+        
+        Example:
+            >> sampler = RandomSearch.random_loguniform(1e-5, 1e-2)
+            >> sampler()
+                0.0004
+        """
         return lambda: np.exp(np.random.uniform(np.log(low), np.log(high)))
 
     @staticmethod
-    def random_subset(*args):
-        choices = []
-        for arg in args:
-            choices.append(arg)
-        func = lambda: np.random.choice(choices, np.random.randint(1, len(choices)+1), replace=False)
-        return func
-
-    @staticmethod
-    def random_pair(*args):
-        choices = []
-        for arg in args:
-            choices.append(arg)
-        func = lambda: np.random.choice(choices, 2, replace=False)
-        return func
-
-    @staticmethod
-    def random_uniform(low, high):
+    def random_uniform(low: Union[float, int], high: Union[float, int]):
+        """
+        pick a random float between two bounds, using uniform distribution
+        
+        Example:
+            >> sampler = RandomSearch.random_uniform(0, 1)
+            >> sampler()
+                0.01
+        """
         return lambda: np.random.uniform(low, high)
 
 

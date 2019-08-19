@@ -40,7 +40,6 @@ class AllenNlpRunner(object):
             sample = search_space.sample()
             for k, v in sample.items():
                 config[k] = str(v)
-                os.environ[k] = str(v)
             
             params_dict = json.loads(
                 _jsonnet.evaluate_snippet(

@@ -33,11 +33,7 @@ class RayExecutor(object):
                 low, high = val['bounds'][0], val['bounds'][1]
                 ray_sampler = function(RandomSearch.random_integer(low, high))
             elif val['sampling strategy'] == 'choice':
-                ray_sampler = function(RandomSearch.random_choice(*val['choices']))
-            elif val['sampling strategy'] == 'subset':
-                ray_sampler = function(RandomSearch.random_subset(*val['choices']))
-            elif val['sampling strategy'] == 'pair':
-                ray_sampler = function(RandomSearch.random_pair(*val['choices']))
+                ray_sampler = function(RandomSearch.random_choice(val['choices']))
             elif val['sampling strategy'] == 'uniform':
                 low, high = val['bounds'][0], val['bounds'][1]
                 ray_sampler = function(RandomSearch.random_uniform(low, high))
