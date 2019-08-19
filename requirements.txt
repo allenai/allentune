@@ -1,6 +1,7 @@
 # External dependencies
 ray==0.6.2
 allennlp
+seaborn
 pandas
 
 # Testing
