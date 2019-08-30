@@ -21,7 +21,7 @@ sns.set_style("white")
 class Plot(Subcommand):
     def add_subparser(self, name: str, parser: argparse._SubParsersAction) -> argparse.ArgumentParser:
         subparser = parser.add_parser(
-                name, description="generate report from experiment", help='Run the configuration wizard.')
+                name, description="generate report from experiment", help='Plot expected validation accuracy curves.')
         subparser.add_argument(
             "--result-file",
             type=str,
@@ -43,45 +43,39 @@ class Plot(Subcommand):
             action="store_true"
         )
         subparser.add_argument(
-            "--duration_field",
+            "--duration-field",
             type=str,
             required=False,
             default="training_duration"
         )
         subparser.add_argument(
-            "--dev_performance_field",
+            "--performance-metric-field",
             type=str,
             required=False,
             default="best_validation_accuracy"
         )
         subparser.add_argument(
-            "--model_field",
+            "--model-field",
             type=str,
             required=False,
             default="model"
         )
         subparser.add_argument(
-            "--learning_rate_field",
-            type=str,
-            required=False,
-            default="trainer.optimizer.lr"
-        )
-        subparser.add_argument(
-            "--plot_errorbar",
+            "--plot-errorbar",
             action="store_true"
         )
         subparser.add_argument(
-            "--show_xticks",
+            "--show-xticks",
             action="store_true"
         )
         subparser.add_argument(
-            "--legend_location",
+            "--legend-location",
             type=str,
             required=False,
             default="lower right"
         )
         subparser.add_argument(
-            "--x_axis_time",
+            "--x-axis-time",
             action="store_true"
         )
         subparser.add_argument(
@@ -91,24 +85,24 @@ class Plot(Subcommand):
             default=3
         )
         subparser.add_argument(
-            "--relabel_logx_scalar",
+            "--relabel-logx-scalar",
             type=list,
             required=False,
             default=None
         )
         subparser.add_argument(
-            "--x_axis_rot",
+            "--x-axis-rot",
             type=float,
             required=False,
             default=0.0
         )
         subparser.add_argument(
-            "--data_name",
+            "--data-name",
             type=str,
             required=True,
         )
         subparser.add_argument(
-            '--performance_metric',
+            '--performance-metric',
             required=False,
             type=str,
             default="accuracy"
@@ -369,15 +363,13 @@ def plotter(args: argparse.Namespace):
     for ((data_file, _), (index, _)) in axes_iter:
         duration_field = config[data_file].pop('duration_field')
         model_field = config[data_file].pop('model_field')
-        dev_performance_field = config[data_file].pop('dev_performance_field')
-        lr_field = config[data_file].pop('learning_rate_field')
+        performance_metric_field = config[data_file].pop('performance_metric_field')
         master = pd.read_json(data_file, lines=True)
         data_sizes = [10000]
         for data_size in data_sizes:
             df = master
             avg_time = df.groupby(model_field)[duration_field].mean()
-            perf = {group_name: group[dev_performance_field].tolist() for group_name, group in df.groupby(model_field)}
-            sample_maxes = df.groupby(model_field)[dev_performance_field].apply(samplemax)
+            sample_maxes = df.groupby(model_field)[performance_metric_field].apply(samplemax)
             expected_max_performance_data[data_file] = {data_size: sample_maxes}
             average_times[data_file] = {data_size: avg_time}
             if subplots == (1,1):

@@ -1,8 +1,13 @@
+import logging
 import os
 from typing import Any, Dict, List, Union
 
 import numpy as np
 import ray
+
+# Create a custom logger
+logger = logging.getLogger(__name__)
+
 
 class RandomSearch:
 
@@ -19,7 +24,10 @@ class RandomSearch:
         choices = []
         for arg in args:
             choices.append(arg)
-        return lambda: np.random.choice(choices, n, replace=False)
+        if n == 1:
+            return lambda: np.random.choice(choices, replace=False)
+        else:
+            return lambda: np.random.choice(choices, n, replace=False)
 
     @staticmethod
     def random_integer(low: Union[int, float], high: Union[int, float]):
@@ -72,7 +80,7 @@ class HyperparameterSearch:
             if isinstance(val, (int, np.int)):
                 return int(val)
             elif isinstance(val, (float, np.float)):
-                return str(val)
+                return val
             elif isinstance(val, (np.ndarray, list)):
                 return " ".join(val)
             else:
@@ -80,7 +88,7 @@ class HyperparameterSearch:
         elif isinstance(val, (int, np.int)):
             return int(val)
         elif isinstance(val, (float, np.float)):
-            return str(val)
+            return val
         elif isinstance(val, (np.ndarray, list)):
             return " ".join(val)
         elif val is None:
@@ -92,7 +100,11 @@ class HyperparameterSearch:
     def sample(self) -> Dict:
         res = {}
         for key, val in self.search_space.items():
-            res[key] = self.parse(val)
+            try:
+                res[key] = self.parse(val)
+            except TypeError as error:
+                logger.error(f"Could not parse key {key} with value {val}. {error}")
+
         return res
 
     def update_environment(self, sample) -> None:

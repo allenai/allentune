@@ -21,7 +21,7 @@ logging.basicConfig(
 class Search(Subcommand):
     def add_subparser(self, name: str, parser: argparse._SubParsersAction) -> argparse.ArgumentParser:
         subparser = parser.add_parser(
-                name, description="search with RayTune", help='Run the configuration wizard.')
+                name, description="search with RayTune", help='Perform hyperparameter search')
 
         subparser.add_argument(
             "--experiment-name",
@@ -78,7 +78,7 @@ class Search(Subcommand):
             help="hyperparameter search strategy used by Ray-Tune",
         )
         subparser.add_argument(
-            "--search_space",
+            "--search-space",
             "-e",
             type=os.path.abspath,
             required=True,

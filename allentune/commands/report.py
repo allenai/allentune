@@ -1,23 +1,28 @@
-import glob
-import os
 import argparse
-from typing import Optional
-from collections import ChainMap
-import pandas as pd
+import glob
 import json
+import logging
+import os
 import re
+import sys
+from collections import ChainMap
+from typing import Optional
+
+import pandas as pd
+
 from allentune.commands.subcommand import Subcommand
 
+logger = logging.getLogger(__name__)
 class Report(Subcommand):
     def add_subparser(self, name: str, parser: argparse._SubParsersAction) -> argparse.ArgumentParser:
         subparser = parser.add_parser(
-                name, description="generate report from experiment", help='Run the configuration wizard.')
+                name, description="generate report from experiment", help='Generate a report from hyperparameter search experiments.')
         subparser.add_argument(
-            "--logdir",
+            "--log-dir",
             required=True,
         )
         subparser.add_argument(
-            '--performance_metric',
+            '--performance-metric',
             required=False,
             type=str
         )
@@ -31,7 +36,7 @@ class Report(Subcommand):
         return subparser
 
 def generate_report(args: argparse.Namespace):
-    experiment_dir = os.path.abspath(args.logdir)
+    experiment_dir = os.path.abspath(args.log_dir)
     dirs = glob.glob(experiment_dir + '/run_*/trial/')
 
     master = []
@@ -59,13 +64,22 @@ def generate_report(args: argparse.Namespace):
     master_dicts = [dict(ChainMap(*item)) for item in master]
 
     df = pd.io.json.json_normalize(master_dicts)
-    df['training_duration'] = pd.to_timedelta(df['training_duration']).dt.total_seconds()
+    try:
+        df['training_duration'] = pd.to_timedelta(df['training_duration']).dt.total_seconds()
+    except KeyError:
+        logger.error(f"No finished experiments found in {args.log_dir}")
+        sys.exit(0)
     if args.model:
         df['model'] = args.model
     output_file = os.path.join(experiment_dir, "results.jsonl")
     df.to_json(output_file, lines=True, orient='records')
     print("results written to {}".format(output_file))
     print(f"total experiments: {df.shape[0]}")
-    best_experiment = df.iloc[df[args.performance_metric].idxmax()]
-    print(f"best perf: {best_experiment[args.performance_metric]}")
-    print(f"directory path: {best_experiment['directory']}")
+
+    try:
+        best_experiment = df.iloc[df[args.performance_metric].idxmax()]
+    except KeyError:
+        logger.error(f"No performance metric {args.performance_metric} found in results of {args.log_dir}")
+        sys.exit(0)
+    print(f"best model performance: {best_experiment[args.performance_metric]}")
+    print(f"best model directory path: {best_experiment['directory']}")
