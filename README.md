@@ -10,8 +10,7 @@ To get started,
 
 First install allennlp with:
 
-```
-git+git://github.com/allenai/allennlp@27ebcf6ba3e02afe341a5e62cb1a7d5c6906c0c9```
+``pip install git+git://github.com/allenai/allennlp@27ebcf6ba3e02afe341a5e62cb1a7d5c6906c0c9``
 
 Then, clone the `allentune` repository and run `pip install --editable .`
 
