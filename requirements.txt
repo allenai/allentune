@@ -1,6 +1,6 @@
 # External dependencies
 ray==0.6.2
-allennlp
+git+git://github.com/allenai/allennlp@27ebcf6ba3e02afe341a5e62cb1a7d5c6906c0c9
 seaborn
 pandas
 
