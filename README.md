@@ -8,17 +8,17 @@ This library was inspired by https://github.com/ChristophAlt/tuna, thanks to tha
 
 To get started, 
 
-First install allennlp with:
+1.  First install allennlp with:
 
-``pip install git+git://github.com/allenai/allennlp@27ebcf6ba3e02afe341a5e62cb1a7d5c6906c0c9``
+    ``pip install git+git://github.com/allenai/allennlp@27ebcf6ba3e02afe341a5e62cb1a7d5c6906c0c9``
 
-Then, clone the `allentune` repository, cd into root folder, and run `pip install --editable .`
+    Then, clone the `allentune` repository, cd into root folder, and run `pip install --editable .`
 
-Then, make sure all tests pass: 
+2.  Then, make sure all tests pass: 
 
-``pytest -v .``
+    ``pytest -v .``
 
-Then, run `allentune -h`.
+Now you can test your installation by running `allentune -h`.
 
 ## What does Allentune support?
 
