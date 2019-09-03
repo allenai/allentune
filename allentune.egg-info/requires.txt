@@ -1,1 +1,5 @@
 ray==0.6.2
+seaborn
+pandas
+pytest
+pytest-cov

@@ -1,7 +1,7 @@
 Metadata-Version: 2.1
 Name: allentune
 Version: 0.0.1a0
-Summary: Hyperparameter tuning for AllenNLP, powered by Ray
+Summary: Hyperparameter tuning for AllenNLP
 Home-page: https://github.com/kernelmachine/allentune
 Author: Suchin Gururangan
 Author-email: suching@allenai.org
@@ -14,7 +14,14 @@ Description: # Allentune
         
         This library was inspired by https://github.com/ChristophAlt/tuna, thanks to that author for their work!
         
-        To get started, clone the repository and run `pip install --editable .`
+        To get started, 
+        
+        First install allennlp with:
+        
+        ```
+        git+git://github.com/allenai/allennlp@27ebcf6ba3e02afe341a5e62cb1a7d5c6906c0c9```
+        
+        Then, clone the `allentune` repository and run `pip install --editable .`
         
         Then, make sure all tests pass: 
         
@@ -50,16 +57,16 @@ Description: # Allentune
         
         ## Run Hyperparameter Search
         
-        Example command for 10 samples of random search with the classifier, on 4 GPUs:
+        Example command for 30 samples of random search with a CNN classifier, on 4 GPUs:
         
         ```
-        $ allentune search \
+        allentune search \
             --experiment-name classifier_search \
             --num-cpus 56 \
             --num-gpus 4 \
             --cpus-per-trial 1 \
             --gpus-per-trial 1 \
-            --search_space ./examples/search_space.jsonnet \
+            --search-space ./examples/search_space.json \
             --num-samples 30 \
             --base-config ./examples/classifier.jsonnet
         ```
@@ -84,9 +91,10 @@ Description: # Allentune
         This command will generate a dataset of resulting hyperparameter assignments and training metrics, for further analysis:
         
         ```
-        $ allentune report \
-            --logdir ./logs/classifier_search/ \
-            --performance_metric best_validation_accuracy
+        allentune report \
+            --log-dir ./logs/classifier_search/ \
+            --performance-metric best_validation_accuracy
+            --model cnn
         ```
         
         This command will create a file `results.jsonl` in `logs/classifier_search`. Each line has the hyperparameter assignments and resulting training metrics from each experiment of your search.
@@ -98,21 +106,21 @@ Description: # Allentune
         Finally, you can also plot expected performance as a function of hyperparameter assignments or training duration. For more information on how this plot is generated, check the associated paper [here](http://arxiv.org).
         
         ```
-        $ allentune plot \
-            --data_name IMDB \
+        allentune plot \
+            --data-name IMDB \
             --subplot 1 1 \
             --figsize 10 10 \
             --result-file ./logs/classifier_search/results.jsonl \
             --output-file ./classifier_performance.pdf
-            --performance_metric_field best_validation_accuracy
-            --performance_metric accuracy
+            --performance-metric-field best_validation_accuracy
+            --performance-metric accuracy
         ```
         
         <div style="text-align:center"> <img src="figs/classifier_performance.png" width="500"></div>
         
         Sample more hyperparameters until this curve converges to some expected validation performance!
         
-Keywords: NLP deep learning hyperparameter tuning
+Keywords: NLP hyperparameter tuning
 Platform: UNKNOWN
 Classifier: Intended Audience :: Science/Research
 Classifier: License :: OSI Approved :: Apache Software License
