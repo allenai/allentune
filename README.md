@@ -98,7 +98,7 @@ This command will generate a dataset of resulting hyperparameter assignments and
 ```
 allentune report \
     --log-dir ./logs/classifier_search/ \
-    --performance-metric best_validation_accuracy
+    --performance-metric best_validation_accuracy \
     --model cnn
 ```
 
@@ -116,8 +116,8 @@ allentune plot \
     --subplot 1 1 \
     --figsize 10 10 \
     --result-file ./logs/classifier_search/results.jsonl \
-    --output-file ./classifier_performance.pdf
-    --performance-metric-field best_validation_accuracy
+    --output-file ./classifier_performance.pdf \
+    --performance-metric-field best_validation_accuracy \
     --performance-metric accuracy
 ```
 
