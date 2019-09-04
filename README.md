@@ -2,6 +2,20 @@
 
 *Hyperparameter Search for AllenNLP, powered by RayTune.*
 
+## Citation
+
+If you use this repository for your research, please cite:
+
+```
+@inproceedings{showyourwork,
+ author = {Jesse Dodge and Suchin Gururangan and Dallas Card and Roy Schwartz and Noah A. Smith},
+ title = {Show Your Work: Improved Reporting of Experimental Results},
+ year = {2019},
+ booktitle = {Proceedings of EMNLP},
+}
+```
+
+
 Run distributed, parallel hyperparameter search on GPUs or CPUs. See the associated paper [here](http://arxiv.org).
 
 This library was inspired by https://github.com/ChristophAlt/tuna, thanks to that author for their work!
@@ -112,15 +126,3 @@ allentune plot \
 Sample more hyperparameters until this curve converges to some expected validation performance!
 
 
-### Citation
-
-If you use this repository for your research, please cite:
-
-```
-@inproceedings{showyourwork,
- author = {Jesse Dodge and Suchin Gururangan and Dallas Card and Roy Schwartz and Noah A. Smith},
- title = {Show Your Work: Improved Reporting of Experimental Results},
- year = {2019},
- booktitle = {Proceedings of EMNLP},
-}
-```
