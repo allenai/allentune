@@ -110,3 +110,17 @@ allentune plot \
 <div style="text-align:center"> <img src="figs/classifier_performance.png" width="500"></div>
 
 Sample more hyperparameters until this curve converges to some expected validation performance!
+
+
+### Citation
+
+If you use this repository for your research, please cite:
+
+```
+@inproceedings{showyourwork,
+ author = {Jesse Dodge and Suchin Gururangan and Dallas Card and Roy Schwartz and Noah A. Smith},
+ title = {Show Your Work: Improved Reporting of Experimental Results},
+ year = {2019},
+ booktitle = {Proceedings of EMNLP},
+}
+```
