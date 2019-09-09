@@ -16,7 +16,7 @@ If you use this repository for your research, please cite:
 ```
 
 
-Run distributed, parallel hyperparameter search on GPUs or CPUs. See the associated paper [here](http://arxiv.org).
+Run distributed, parallel hyperparameter search on GPUs or CPUs. See the associated paper [here](https://arxiv.org/abs/1909.03004).
 
 This library was inspired by https://github.com/ChristophAlt/tuna, thanks to that author for their work!
 
