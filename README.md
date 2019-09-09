@@ -1,6 +1,6 @@
 # Allentune
 
-*Hyperparameter Search for AllenNLP, powered by RayTune.*
+*Hyperparameter Search for AllenNLP*
 
 ## Citation
 
