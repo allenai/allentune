@@ -7,6 +7,7 @@ from allennlp.commands.subcommand import Subcommand
 from allentune.commands.report import Report
 from allentune.commands.search import Search
 from allentune.commands.plot import Plot
+from allentune.commands.merge import Merge
 
 logger = logging.getLogger(__name__)  # pylint: disable=invalid-name
 
@@ -53,7 +54,8 @@ def main(prog: str = None) -> None:
             # Default commands
             "search": Search(),
             "report": Report(),
-            "plot": Plot()
+            "plot": Plot(),
+            "merge": Merge()
     }
 
     for name, subcommand in subcommands.items():

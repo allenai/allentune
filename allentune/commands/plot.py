@@ -2,6 +2,7 @@ import argparse
 import datetime
 import glob
 import json
+import logging
 import os
 from collections import ChainMap
 from typing import Dict, List, Optional, Tuple
@@ -17,6 +18,8 @@ from matplotlib.ticker import ScalarFormatter
 from allentune.commands.subcommand import Subcommand
 
 sns.set_style("white")
+
+logger = logging.getLogger(__name__)
 
 class Plot(Subcommand):
     def add_subparser(self, name: str, parser: argparse._SubParsersAction) -> argparse.ArgumentParser:
@@ -86,7 +89,8 @@ class Plot(Subcommand):
         )
         subparser.add_argument(
             "--relabel-logx-scalar",
-            type=list,
+            nargs="+",
+            type=int,
             required=False,
             default=None
         )
@@ -383,5 +387,5 @@ def plotter(args: argparse.Namespace):
                         data_size,
                         axis,
                         **config[data_file])
-    print("saving to {}".format(output_file))
+    logger.info("saving to {}".format(output_file))
     plt.savefig(output_file, dpi=300)
