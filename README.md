@@ -6,7 +6,7 @@
 
 If you use this repository for your research, please cite:
 
-```
+```bibtex
 @inproceedings{showyourwork,
  author = {Jesse Dodge and Suchin Gururangan and Dallas Card and Roy Schwartz and Noah A. Smith},
  title = {Show Your Work: Improved Reporting of Experimental Results},
@@ -15,29 +15,31 @@ If you use this repository for your research, please cite:
 }
 ```
 
+Run distributed, parallel hyperparameter search on GPUs or CPUs. See the [associated paper](https://arxiv.org/abs/1909.03004).
 
-Run distributed, parallel hyperparameter search on GPUs or CPUs. See the associated paper [here](https://arxiv.org/abs/1909.03004).
-
-This library was inspired by https://github.com/ChristophAlt/tuna, thanks to that author for their work!
+This library was inspired by [tuna](https://github.com/ChristophAlt/tuna), thanks to @ChristophAlt for the work!
 
 To get started, 
 
-1.  First install allennlp with:
+1.  First install allentune with:
 
-    ``pip install git+git://github.com/allenai/allennlp@27ebcf6ba3e02afe341a5e62cb1a7d5c6906c0c9``
+    ```bash
+    pip install git+git://github.com/allenai/allennlp@27ebcf6ba3e02afe341a5e62cb1a7d5c6906c0c9
+    ```
 
     Then, clone the `allentune` repository, cd into root folder, and run `pip install --editable .`
 
 2.  Then, make sure all tests pass: 
 
-    ``pytest -v .``
+    ```bash
+    pytest -v .
+    ```
 
 Now you can test your installation by running `allentune -h`.
 
 ## What does Allentune support?
 
 This library is compatible with random and grid search algorithms via Raytune. Support for complex search schedulers (e.g. Hyperband, Median Stopping Rule, Population Based Training) is on the roadmap.
-
 
 ## How does it work?
 
@@ -64,23 +66,23 @@ If you want to fix a particular hyperparameter, just set it as a constant in the
 
 Example command for 30 samples of random search with a CNN classifier, on 4 GPUs:
 
-```
+```bash
 allentune search \
     --experiment-name classifier_search \
     --num-cpus 56 \
     --num-gpus 4 \
     --cpus-per-trial 1 \
     --gpus-per-trial 1 \
-    --search-space ./examples/search_space.json \
+    --search-space examples/search_space.json \
     --num-samples 30 \
-    --base-config ./examples/classifier.jsonnet
+    --base-config examples/classifier.jsonnet
 ```
 
 To restrict the GPUs you run on, run the above command with `CUDA_VISIBLE_DEVICES=xxx`.
 
 When using allentune with your own allennlp modules, run it with the `--include-package xxx` flag, just like you would when running the `allennlp` command.
 
-The `search` command will output all results of experiments in the specified `--logdir`, default output directory is `$(pwd)/logs/`.
+The `search` command will output all results of experiments in the specified `--log-dir`, default output directory is `logs/`.
 
 **Note**: You can add the `--include-package XXX` flag when using allentune on your custom library, just like you would with allennlp.
 
@@ -95,9 +97,9 @@ To check progress on your search, or to check results with your search has compl
 
 This command will generate a dataset of resulting hyperparameter assignments and training metrics, for further analysis:
 
-```
+```bash
 allentune report \
-    --log-dir ./logs/classifier_search/ \
+    --log-dir logs/classifier_search/ \
     --performance-metric best_validation_accuracy \
     --model cnn
 ```
@@ -108,15 +110,15 @@ This command will create a file `results.jsonl` in `logs/classifier_search`. Eac
 
 ## Plot expected performance
 
-Finally, you can also plot expected performance as a function of hyperparameter assignments or training duration. For more information on how this plot is generated, check the associated paper [here](http://arxiv.org).
+Finally, you can also plot expected performance as a function of hyperparameter assignments or training duration. For more information on how this plot is generated, check the [associated paper](https://arxiv.org/abs/1909.03004).
 
-```
+```bash
 allentune plot \
     --data-name IMDB \
     --subplot 1 1 \
     --figsize 10 10 \
-    --result-file ./logs/classifier_search/results.jsonl \
-    --output-file ./classifier_performance.pdf \
+    --result-file logs/classifier_search/results.jsonl \
+    --output-file classifier_performance.pdf \
     --performance-metric-field best_validation_accuracy \
     --performance-metric accuracy
 ```
@@ -124,5 +126,3 @@ allentune plot \
 <div style="text-align:center"> <img src="figs/classifier_performance.png" width="500"></div>
 
 Sample more hyperparameters until this curve converges to some expected validation performance!
-
-

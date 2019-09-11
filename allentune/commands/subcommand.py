@@ -8,7 +8,7 @@ class Subcommand:
     An abstract class representing subcommands for allentune.run.
     If you wanted to (for example) create your own custom `special-evaluate` command to use like
 
-    ``allennlp special-evaluate ...``
+    ``allentune special-evaluate ...``
 
     you would create a ``Subcommand`` subclass and then pass it as an override to
     :func:`~allennlp.commands.main` .
