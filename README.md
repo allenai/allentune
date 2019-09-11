@@ -80,10 +80,6 @@ allentune search \
 
 To restrict the GPUs you run on, run the above command with `CUDA_VISIBLE_DEVICES=xxx`.
 
-When using allentune with your own allennlp modules, run it with the `--include-package xxx` flag, just like you would when running the `allennlp` command.
-
-The `search` command will output all results of experiments in the specified `--log-dir`, default output directory is `logs/`.
-
 **Note**: You can add the `--include-package XXX` flag when using allentune on your custom library, just like you would with allennlp.
 
 
@@ -93,7 +89,7 @@ By default, allentune logs all search trials to a `logs/` directory in your curr
 
 ## Generate a report from the search
 
-To check progress on your search, or to check results with your search has completed, you can run `allentune report`. 
+To check progress on your search, or to check results when your search has completed, run `allentune report`. 
 
 This command will generate a dataset of resulting hyperparameter assignments and training metrics, for further analysis:
 
@@ -106,11 +102,11 @@ allentune report \
 
 This command will create a file `results.jsonl` in `logs/classifier_search`. Each line has the hyperparameter assignments and resulting training metrics from each experiment of your search.
 
-`allentune report` will also tell you currently best performing model, and the path to its serialization directory.
+`allentune report` will also tell you the currently best performing model, and the path to its serialization directory.
 
 ## Plot expected performance
 
-Finally, you can also plot expected performance as a function of hyperparameter assignments or training duration. For more information on how this plot is generated, check the [associated paper](https://arxiv.org/abs/1909.03004).
+Finally, you can plot expected performance as a function of hyperparameter assignments or training duration. For more information on how this plot is generated, check the [associated paper](https://arxiv.org/abs/1909.03004).
 
 ```bash
 allentune plot \
