@@ -8,6 +8,7 @@ from datetime import datetime
 from typing import Optional
 
 import pandas as pd
+import torch
 from allennlp.commands.train import train_model
 from allennlp.common.params import Params, parse_overrides, with_fallback
 from allennlp.common.util import import_submodules
@@ -49,6 +50,9 @@ class AllenNlpRunner(object):
             if args.num_gpus == 0:
                 logger.warning(f"No GPU specified, using CPU.")
                 params_dict["trainer"]["cuda_device"] = -1
+
+            if args.cpus_per_trial > 0:
+                torch.set_num_threads(args.cpus_per_trial)
 
             params = Params(params_dict)
 
