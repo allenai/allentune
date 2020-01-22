@@ -10,6 +10,7 @@ import ray
 from ray.tune import function, register_trainable, run_experiments, sample_from
 from ray.tune.function_runner import StatusReporter
 
+import _jsonnet
 from allentune.modules.allennlp_runner import AllenNlpRunner
 from allentune.util.random_search import RandomSearch
 
@@ -57,8 +58,14 @@ class RayExecutor(object):
         run_func = self._runner.get_run_func(args)
         register_trainable("run", run_func)
 
-        with open(args.search_space) as f:
-            search_config = json.load(f)
+        with open(args.search_space, "r") as parameter_f:
+            search_config_snippet = parameter_f.read()
+
+        search_config = json.loads(
+                _jsonnet.evaluate_snippet(
+                    "config", search_config_snippet, tla_codes={}, ext_vars=dict(os.environ)
+                )
+        )
 
         search_config = self.parse_search_config(search_config)
         experiments_config = {

@@ -243,7 +243,7 @@ def _one_plot(
             model_order: List[str] = None,
             performance_metric: str = "accuracy",
             x_axis_rot: int = 0,
-            line_colors: List[str] = ["#8c564b", '#1f77b4', '#ff7f0e', '#17becf'],
+            line_colors: List[str] = ["#8c564b", '#1f77b4', '#ff7f0e', '#17becf', "#654321"],
             errorbar_colors: List[str] = ['#B22222', "#089FFF", "#228B22"]):
 
     cur_ax.set_title(data_name, fontsize=fontsize)
@@ -310,14 +310,14 @@ def _one_plot(
                                 yerr=vars,
                                 label=model_name,
                                 linestyle=linestyle,
-                                linewidth=linewidth,
-                                color=line_colors[ix])
+                                linewidth=linewidth)
+                                # color=line_colors[ix])
         line = cur_ax.plot(x_axis,
                             means,
                             label=model_name,
                             linestyle=linestyle,
-                            linewidth=linewidth,
-                            color=line_colors[ix])
+                            linewidth=linewidth)
+                            # color=line_colors[ix])
     
     left, right = cur_ax.get_xlim()
     if xlim:

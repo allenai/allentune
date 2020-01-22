@@ -77,9 +77,19 @@ def generate_report(args: argparse.Namespace):
     logger.info(f"total experiments: {df.shape[0]}")
 
     try:
-        best_experiment = df.iloc[df[args.performance_metric].idxmax()]
+        best_performance = df[args.performance_metric].max()
+        median_performance = df[args.performance_metric].median()
+        worst_performance = df[args.performance_metric].min()
+        mean_performance = df[args.performance_metric].mean()
+        std_performance = df[args.performance_metric].std()
+        iqr_performance = df[args.performance_metric].quantile(0.75) - df[args.performance_metric].quantile(0.25)
+
     except KeyError:
         logger.error(f"No performance metric {args.performance_metric} found in results of {args.log_dir}")
         sys.exit(0)
-    logger.info(f"best model performance: {best_experiment[args.performance_metric]}")
-    logger.info(f"best model directory path: {best_experiment['directory']}")
+    logger.info(f"best performance: {best_performance}")
+    logger.info(f"median +- IQR performance: {median_performance} +- {iqr_performance}")
+    logger.info(f"min performance: {worst_performance}")
+    logger.info(f"mean +- std performance: {mean_performance} +- {std_performance}")
+
+

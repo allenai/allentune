@@ -3,6 +3,7 @@ import os
 from typing import Any, Dict, List, Union
 
 import numpy as np
+import random
 import ray
 
 # Create a custom logger
