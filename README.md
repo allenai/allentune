@@ -15,6 +15,12 @@ If you use this repository for your research, please cite:
 }
 ```
 
+## Generating expected validation curves
+
+If you are interested in plotting expected validation curves without using AllenTune, we've extracted the code for plotting here: https://github.com/dodgejesse/show_your_work
+
+## Using AllenTune
+
 Run distributed, parallel hyperparameter search on GPUs or CPUs. See the [associated paper](https://arxiv.org/abs/1909.03004).
 
 This library was inspired by [tuna](https://github.com/ChristophAlt/tuna), thanks to @ChristophAlt for the work!
