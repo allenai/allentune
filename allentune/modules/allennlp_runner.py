@@ -11,7 +11,7 @@ import pandas as pd
 import torch
 from allennlp.commands.train import train_model
 from allennlp.common.params import Params, parse_overrides, with_fallback
-from allennlp.common.util import import_submodules
+from allennlp.common.util import import_module_and_submodules
 
 import _jsonnet
 from allentune.util.random_search import HyperparameterSearch
@@ -35,7 +35,7 @@ class AllenNlpRunner(object):
             logger.debug(f"CUDA_VISIBLE_DEVICES: {os.environ['CUDA_VISIBLE_DEVICES']}")
             
             for package_name in getattr(args, "include_package", ()):
-                import_submodules(package_name)
+                import_module_and_submodules(package_name)
 
             search_space = HyperparameterSearch(**config)
             sample = search_space.sample()
