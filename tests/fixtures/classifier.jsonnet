@@ -4,9 +4,9 @@ local USE_LAZY_DATASET_READER = std.parseInt(std.extVar("LAZY_DATASET_READER")) 
 local CUDA_DEVICE = std.parseInt(std.extVar("CUDA_DEVICE"));
 
 // Paths to data.
-local TRAIN_PATH = "/Users/suching/Github/allentune/tests/fixtures/imdb/train.jsonl";
-local DEV_PATH = "/Users/suching/Github/allentune/tests/fixtures/imdb/dev.jsonl";
-local TEST_PATH = "/Users/suching/Github/allentune/tests/fixtures/imdb/test.jsonl";
+local TRAIN_PATH = "tests/fixtures/imdb/train.jsonl";
+local DEV_PATH = "tests/fixtures/imdb/dev.jsonl";
+local TEST_PATH = "tests/fixtures/imdb/test.jsonl";
 
 // learning rate of overall model.
 local LEARNING_RATE = std.extVar("LEARNING_RATE");
