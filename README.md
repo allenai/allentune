@@ -32,9 +32,9 @@ To get started, clone the `allentune` repository, cd into root folder, and run `
 
 Then, make sure all tests pass: 
 
-    ```bash
-    pytest -v .
-    ```
+```bash
+pytest -v .
+```
 
 Now you can test your installation by running `allentune -h`.
 
