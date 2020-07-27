@@ -9,6 +9,7 @@ from collections import ChainMap
 from typing import Optional
 
 import pandas as pd
+import tabulate
 
 from allentune.commands.subcommand import Subcommand
 
@@ -83,14 +84,14 @@ def generate_report(args: argparse.Namespace):
         mean_performance = df[args.performance_metric].mean()
         std_performance = df[args.performance_metric].std()
         iqr_performance = df[args.performance_metric].quantile(0.75) - df[args.performance_metric].quantile(0.25)
-
     except KeyError:
         logger.error(f"No performance metric {args.performance_metric} found in results of {args.log_dir}")
         sys.exit(0)
-    logger.info(f"best performance: {best_performance}")
-    logger.info(f"median +- IQR performance: {median_performance} +- {iqr_performance}")
-    logger.info(f"min performance: {worst_performance}")
-    logger.info(f"mean +- std performance: {mean_performance} +- {std_performance}")
-    logger.info(f"best model directory path: {best_experiment['directory']}")
+    results = [["Best Performance", f"{best_performance}"], 
+     ["Min Performance", f"{median_performance} +- {iqr_performance}"],
+     ["Mean +- STD Performance", f"{mean_performance} +- {std_performance}"],
+     ["Median +- IQR Performance", f"{median_performance} +- {iqr_performance}"],
+     ["Best Model Directory Path", f"{df.iloc[df[args.performance_metric].idxmax()]['directory']}"],
+     ]
 
-
+    logger.info(tabulate(results))
