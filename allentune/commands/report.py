@@ -9,7 +9,7 @@ from collections import ChainMap
 from typing import Optional
 
 import pandas as pd
-import tabulate
+from tabulate import tabulate
 
 from allentune.commands.subcommand import Subcommand
 
@@ -75,8 +75,6 @@ def generate_report(args: argparse.Namespace):
     output_file = os.path.join(experiment_dir, "results.jsonl")
     df.to_json(output_file, lines=True, orient='records')
     logger.info("results written to {}".format(output_file))
-    logger.info(f"total experiments: {df.shape[0]}")
-
     try:
         best_performance = df[args.performance_metric].max()
         median_performance = df[args.performance_metric].median()
@@ -87,11 +85,15 @@ def generate_report(args: argparse.Namespace):
     except KeyError:
         logger.error(f"No performance metric {args.performance_metric} found in results of {args.log_dir}")
         sys.exit(0)
-    results = [["Best Performance", f"{best_performance}"], 
+    results = [
+     ["Model Name", args.model],
+     ["Performance Metric", args.performance_metric],
+     ['Total Experiments', f"{df.shape[0]}"],
+     ["Best Performance", f"{best_performance}"], 
      ["Min Performance", f"{median_performance} +- {iqr_performance}"],
      ["Mean +- STD Performance", f"{mean_performance} +- {std_performance}"],
      ["Median +- IQR Performance", f"{median_performance} +- {iqr_performance}"],
      ["Best Model Directory Path", f"{df.iloc[df[args.performance_metric].idxmax()]['directory']}"],
      ]
 
-    logger.info(tabulate(results))
+    logger.info('\n' + tabulate(results))

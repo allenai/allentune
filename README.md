@@ -75,7 +75,7 @@ allentune search \
     --cpus-per-trial 1 \
     --gpus-per-trial 1 \
     --search-space examples/search_space.json \
-    --num-samples 30 \
+    --num-samples 45 \
     --base-config examples/classifier.jsonnet
 ```
 
@@ -98,12 +98,26 @@ This command will generate a dataset of resulting hyperparameter assignments and
 allentune report \
     --log-dir logs/classifier_search/ \
     --performance-metric best_validation_accuracy \
-    --model cnn
+    --model "CNN Classifier"
 ```
 
 This command will create a file `results.jsonl` in `logs/classifier_search`. Each line has the hyperparameter assignments and resulting training metrics from each experiment of your search.
 
-`allentune report` will also tell you the currently best performing model, and the path to its serialization directory.
+`allentune report` will also tell you the currently best performing model, and the path to its serialization directory:
+
+```
+-------------------------  ----------------------------------------------------------------------------------------
+Model Name                 CNN Classifier                                                            
+Performance Metric         best_validation_accuracy                                                          
+Total Experiments          44
+Best Performance           0.8844
+Min Performance            0.8505 +- 0.08600000000000008
+Mean +- STD Performance    0.8088454545454546 +- 0.08974256581128731
+Median +- IQR Performance  0.8505 +- 0.08600000000000008
+Best Model Directory Path /home/suching/allentune/logs/classifier_search/run_18_2020-07-27_14-57-28lfw_dbkq/trial/
+------------------------- ----------------------------------------------------------------------------------------
+```
+
 
 
 ## Merge multiple reports
