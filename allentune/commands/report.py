@@ -63,7 +63,7 @@ def generate_report(args: argparse.Namespace):
 
     master_dicts = [dict(ChainMap(*item)) for item in master]
 
-    df = pd.io.json.json_normalize(master_dicts)
+    df = pd.json_normalize(master_dicts)
     try:
         df['training_duration'] = pd.to_timedelta(df['training_duration']).dt.total_seconds()
     except KeyError:
