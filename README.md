@@ -28,17 +28,9 @@ Run distributed, parallel hyperparameter search on GPUs or CPUs. See the [associ
 
 This library was inspired by [tuna](https://github.com/ChristophAlt/tuna), thanks to @ChristophAlt for the work!
 
-To get started, 
+To get started, clone the `allentune` repository, cd into root folder, and run `pip install --editable .`s  
 
-1.  First install allentune with:
-
-    ```bash
-    pip install git+git://github.com/allenai/allennlp@27ebcf6ba3e02afe341a5e62cb1a7d5c6906c0c9
-    ```
-
-    Then, clone the `allentune` repository, cd into root folder, and run `pip install --editable .`
-
-2.  Then, make sure all tests pass: 
+Then, make sure all tests pass: 
 
     ```bash
     pytest -v .
