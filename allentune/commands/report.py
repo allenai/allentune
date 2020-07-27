@@ -73,13 +73,23 @@ def generate_report(args: argparse.Namespace):
         df['model'] = args.model
     output_file = os.path.join(experiment_dir, "results.jsonl")
     df.to_json(output_file, lines=True, orient='records')
-    print("results written to {}".format(output_file))
-    print(f"total experiments: {df.shape[0]}")
+    logger.info("results written to {}".format(output_file))
+    logger.info(f"total experiments: {df.shape[0]}")
 
     try:
-        best_experiment = df.iloc[df[args.performance_metric].idxmax()]
+        best_performance = df[args.performance_metric].max()
+        median_performance = df[args.performance_metric].median()
+        worst_performance = df[args.performance_metric].min()
+        mean_performance = df[args.performance_metric].mean()
+        std_performance = df[args.performance_metric].std()
+        iqr_performance = df[args.performance_metric].quantile(0.75) - df[args.performance_metric].quantile(0.25)
+
     except KeyError:
         logger.error(f"No performance metric {args.performance_metric} found in results of {args.log_dir}")
         sys.exit(0)
-    print(f"best model performance: {best_experiment[args.performance_metric]}")
-    print(f"best model directory path: {best_experiment['directory']}")
+    logger.info(f"best performance: {best_performance}")
+    logger.info(f"median +- IQR performance: {median_performance} +- {iqr_performance}")
+    logger.info(f"min performance: {worst_performance}")
+    logger.info(f"mean +- std performance: {mean_performance} +- {std_performance}")
+
+
