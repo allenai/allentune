@@ -59,7 +59,7 @@ local TOKEN_EMBEDDERS = GLOVE_FIELDS(GLOVE_TRAINABLE)['glove_embedder'];
 
 local EMBEDDING_DIM = GLOVE_FIELDS(GLOVE_TRAINABLE)['embedding_dim'];
 
-local ENCODER = CNN_FIELDS(std.parseInt(std.extVar("MAX_FILTER_SIZE")), EMBEDDING_DIM, std.parseInt(std.extVar("HIDDEN_SIZE")), std.extVar("NUM_FILTERS"));
+local ENCODER = CNN_FIELDS(std.parseInt(std.extVar("MAX_FILTER_SIZE")), EMBEDDING_DIM, std.parseInt(std.extVar("HIDDEN_SIZE")), std.parseInt(std.extVar("NUM_FILTERS")));
 
 local OUTPUT_LAYER_DIM = std.parseInt(std.extVar("HIDDEN_SIZE"));
 
@@ -71,10 +71,8 @@ local OUTPUT_LAYER_HIDDEN_DIM = if std.parseInt(std.extVar("NUM_OUTPUT_LAYERS"))
 local BASE_READER(TOKEN_INDEXERS) = {
   "lazy": false,
   "type": "text_classification_json",
-  "tokenizer": {
-    "word_splitter": "just_spaces",
-  },
   "token_indexers": TOKEN_INDEXERS,
+  "max_sequence_length": 400
 };
 
 {
@@ -94,27 +92,24 @@ local BASE_READER(TOKEN_INDEXERS) = {
         "token_embedders": TOKEN_EMBEDDERS
       },
       "seq2vec_encoder": ENCODER, 
-      "dropout": DROPOUT
+      "dropout": std.parseJson(DROPOUT)
    },	
-    "iterator": {
-      "batch_size": BATCH_SIZE,
-      "type": "basic"
-   },
+    "data_loader": {
+        "batch_sampler": {
+            "type": "basic",
+            "sampler": "sequential",
+            "batch_size": BATCH_SIZE,
+            "drop_last": false
+        }
+    },
 
    "trainer": {
       "cuda_device": CUDA_DEVICE,
       "num_epochs": NUM_EPOCHS,
       "optimizer": {
-         "lr": LEARNING_RATE,
+         "lr": std.parseJson(LEARNING_RATE),
          "type": "adam"
       },
-      "learning_rate_scheduler": {
-          "type": "reduce_on_plateau",
-          "factor": 0.5, 
-          "patience": 2
-      },
-      "patience": 10,
-      "num_serialized_models_to_keep": 1,
       "validation_metric": "+accuracy"
    }
 }

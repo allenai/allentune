@@ -15,6 +15,9 @@ If you use this repository for your research, please cite:
 }
 ```
 
+**NOTE**: This repository works with allennlp 1.0.0. 
+
+
 ## Generating expected validation curves
 
 If you are interested in plotting expected validation curves without using AllenTune, we've extracted the code for plotting here: https://github.com/dodgejesse/show_your_work
@@ -25,21 +28,13 @@ Run distributed, parallel hyperparameter search on GPUs or CPUs. See the [associ
 
 This library was inspired by [tuna](https://github.com/ChristophAlt/tuna), thanks to @ChristophAlt for the work!
 
-To get started, 
+To get started, clone the `allentune` repository, cd into root folder, and run `pip install --editable .`s  
 
-1.  First install allentune with:
+Then, make sure all tests pass: 
 
-    ```bash
-    pip install git+git://github.com/allenai/allennlp@27ebcf6ba3e02afe341a5e62cb1a7d5c6906c0c9
-    ```
-
-    Then, clone the `allentune` repository, cd into root folder, and run `pip install --editable .`
-
-2.  Then, make sure all tests pass: 
-
-    ```bash
-    pytest -v .
-    ```
+```bash
+pytest -v .
+```
 
 Now you can test your installation by running `allentune -h`.
 
@@ -80,7 +75,7 @@ allentune search \
     --cpus-per-trial 1 \
     --gpus-per-trial 1 \
     --search-space examples/search_space.json \
-    --num-samples 30 \
+    --num-samples 50 \
     --base-config examples/classifier.jsonnet
 ```
 
@@ -103,12 +98,39 @@ This command will generate a dataset of resulting hyperparameter assignments and
 allentune report \
     --log-dir logs/classifier_search/ \
     --performance-metric best_validation_accuracy \
-    --model cnn
+    --model "CNN Classifier"
 ```
 
 This command will create a file `results.jsonl` in `logs/classifier_search`. Each line has the hyperparameter assignments and resulting training metrics from each experiment of your search.
 
-`allentune report` will also tell you the currently best performing model, and the path to its serialization directory.
+`allentune report` will also tell you the currently best performing model, and the path to its serialization directory:
+
+```
+-------------------------  ----------------------------------------------------------------------------------------
+Model Name                 CNN Classifier                                                            
+Performance Metric         best_validation_accuracy                                                          
+Total Experiments          44
+Best Performance           0.8844
+Min Performance            0.8505 +- 0.08600000000000008
+Mean +- STD Performance    0.8088454545454546 +- 0.08974256581128731
+Median +- IQR Performance  0.8505 +- 0.08600000000000008
+Best Model Directory Path /home/suching/allentune/logs/classifier_search/run_18_2020-07-27_14-57-28lfw_dbkq/trial/
+------------------------- ----------------------------------------------------------------------------------------
+```
+
+
+
+## Merge multiple reports
+
+To merge the reports of multiple models, we've added a simple convenience command `merge`.
+
+The following command will merge the results of multiple runs into a single file `merged_results.jsonl` for further analysis.
+
+```bash
+allentune merge \
+    --input-files logs/classifier_1_search/results.jsonl logs/classifier_2_search/results.jsonl  \
+    --output-file merged_results.jsonl \
+```
 
 ## Plot expected performance
 

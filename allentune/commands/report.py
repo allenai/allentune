@@ -9,6 +9,7 @@ from collections import ChainMap
 from typing import Optional
 
 import pandas as pd
+from tabulate import tabulate
 
 from allentune.commands.subcommand import Subcommand
 
@@ -63,7 +64,7 @@ def generate_report(args: argparse.Namespace):
 
     master_dicts = [dict(ChainMap(*item)) for item in master]
 
-    df = pd.io.json.json_normalize(master_dicts)
+    df = pd.json_normalize(master_dicts)
     try:
         df['training_duration'] = pd.to_timedelta(df['training_duration']).dt.total_seconds()
     except KeyError:
@@ -73,13 +74,26 @@ def generate_report(args: argparse.Namespace):
         df['model'] = args.model
     output_file = os.path.join(experiment_dir, "results.jsonl")
     df.to_json(output_file, lines=True, orient='records')
-    print("results written to {}".format(output_file))
-    print(f"total experiments: {df.shape[0]}")
-
+    logger.info("results written to {}".format(output_file))
     try:
-        best_experiment = df.iloc[df[args.performance_metric].idxmax()]
+        best_performance = df[args.performance_metric].max()
+        median_performance = df[args.performance_metric].median()
+        worst_performance = df[args.performance_metric].min()
+        mean_performance = df[args.performance_metric].mean()
+        std_performance = df[args.performance_metric].std()
+        iqr_performance = df[args.performance_metric].quantile(0.75) - df[args.performance_metric].quantile(0.25)
     except KeyError:
         logger.error(f"No performance metric {args.performance_metric} found in results of {args.log_dir}")
         sys.exit(0)
-    print(f"best model performance: {best_experiment[args.performance_metric]}")
-    print(f"best model directory path: {best_experiment['directory']}")
+    results = [
+     ["Model Name", args.model],
+     ["Performance Metric", args.performance_metric],
+     ['Total Experiments', f"{df.shape[0]}"],
+     ["Best Performance", f"{best_performance}"], 
+     ["Min Performance", f"{median_performance} +- {iqr_performance}"],
+     ["Mean +- STD Performance", f"{mean_performance} +- {std_performance}"],
+     ["Median +- IQR Performance", f"{median_performance} +- {iqr_performance}"],
+     ["Best Model Directory Path", f"{df.iloc[df[args.performance_metric].idxmax()]['directory']}"],
+     ]
+
+    logger.info('\n' + tabulate(results))

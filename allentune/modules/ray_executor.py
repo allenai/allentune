@@ -28,15 +28,15 @@ class RayExecutor(object):
                 ray_sampler = val
             elif val['sampling strategy'] == 'loguniform':
                 low, high = val['bounds'][0], val['bounds'][1]
-                ray_sampler = function(RandomSearch.random_loguniform(low, high))
+                ray_sampler = RandomSearch.random_loguniform(low, high)
             elif val['sampling strategy'] == 'integer':
                 low, high = val['bounds'][0], val['bounds'][1]
-                ray_sampler = function(RandomSearch.random_integer(low, high))
+                ray_sampler = RandomSearch.random_integer(low, high)
             elif val['sampling strategy'] == 'choice':
-                ray_sampler = function(RandomSearch.random_choice(val['choices']))
+                ray_sampler = RandomSearch.random_choice(val['choices'])
             elif val['sampling strategy'] == 'uniform':
                 low, high = val['bounds'][0], val['bounds'][1]
-                ray_sampler = function(RandomSearch.random_uniform(low, high))
+                ray_sampler = RandomSearch.random_uniform(low, high)
             else:
                 raise KeyError(f"sampling strategy {val['sampling strategy']} does not exist")
             search_config[hyperparameter] = ray_sampler
