@@ -15,6 +15,9 @@ If you use this repository for your research, please cite:
 }
 ```
 
+**NOTE**: This repository works with allennlp 1.0.0. 
+
+
 ## Generating expected validation curves
 
 If you are interested in plotting expected validation curves without using AllenTune, we've extracted the code for plotting here: https://github.com/dodgejesse/show_your_work
