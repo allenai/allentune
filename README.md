@@ -105,6 +105,19 @@ This command will create a file `results.jsonl` in `logs/classifier_search`. Eac
 
 `allentune report` will also tell you the currently best performing model, and the path to its serialization directory.
 
+
+## Merge multiple reports
+
+To merge the reports of multiple models, we've added a simple convenience command `merge`.
+
+The following command will merge the results of multiple runs into a single file `merged_results.jsonl` for further analysis.
+
+```bash
+allentune merge \
+    --input-files logs/classifier_1_search/results.jsonl logs/classifier_2_search/results.jsonl  \
+    --output-file merged_results.jsonl \
+```
+
 ## Plot expected performance
 
 Finally, you can plot expected performance as a function of hyperparameter assignments or training duration. For more information on how this plot is generated, check the [associated paper](https://arxiv.org/abs/1909.03004).
