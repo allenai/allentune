@@ -75,8 +75,8 @@ class HyperparameterSearch:
             self.search_space[key] = val
 
     def parse(self, val: Any):
-        if isinstance(val, ray.tune.suggest.variant_generator.function):
-            val = val.func()
+        if isinstance(val, type(lambda x: x)):
+            val = val()
             if isinstance(val, (int, np.int)):
                 return int(val)
             elif isinstance(val, (float, np.float)):
