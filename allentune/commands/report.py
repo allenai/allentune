@@ -91,5 +91,6 @@ def generate_report(args: argparse.Namespace):
     logger.info(f"median +- IQR performance: {median_performance} +- {iqr_performance}")
     logger.info(f"min performance: {worst_performance}")
     logger.info(f"mean +- std performance: {mean_performance} +- {std_performance}")
+    logger.info(f"best model directory path: {best_experiment['directory']}")
 
 
