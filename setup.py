@@ -34,7 +34,7 @@ setup(
     license="Apache",
     url="https://github.com/kernelmachine/allentune",
     packages=find_packages(exclude=["*.tests", "*.tests.*", "tests.*", "tests"]),
-    install_requires=["ray==0.8.6",
+    install_requires=["ray==2.43.0",
                       "allennlp==1.0.0",
                       "tabulate",
                       "seaborn",
