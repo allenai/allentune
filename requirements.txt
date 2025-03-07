@@ -1,5 +1,5 @@
 # External dependencies
-ray==0.8.6
+ray==2.43.0
 seaborn
 pandas
 torch
